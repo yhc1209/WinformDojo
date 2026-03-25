@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using WinformDojo.Dialogs;
 
 namespace WinformDojo;
 
@@ -22,6 +23,7 @@ public partial class Form1 : Form
 
     private void BtnMultiSvrSelectionCallback(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        using (DlgMultiSvrSwitch dlg = new DlgMultiSvrSwitch())
+            dlg.ShowDialog();
     }
 }
