@@ -17,16 +17,22 @@ public class DlgMultiSvrSwitch : Form
 
     private void BtnConnectClickCallback(object sender, EventArgs e)
     {
-        string svrurl = CbxServerUrl.Text;
-        if (string.IsNullOrWhiteSpace(svrurl))
+        if (CbxServerUrl.Text.Length == 0)
         {
             MessageBox.Show("請指定要連線的server URL。", Text);
             return;
         }
-
+        string svrurl = AutoFormat(CbxServerUrl.Text);
+        CbxServerUrl.Text = svrurl;
         Debug.WriteLine($"向{svrurl}連線。");
         if (NewServerUrl(svrurl))
             Debug.WriteLine($"新增{svrurl}至server名單。");
+    }
+
+    private string AutoFormat(string rawText)
+    {
+        UriBuilder builder = new UriBuilder(rawText);
+        return builder.Uri.ToString();
     }
 
     private bool NewServerUrl(string url)
@@ -55,6 +61,7 @@ public class DlgMultiSvrSwitch : Form
         // CbxServerUrl
         CbxServerUrl.Name = "CbxServerUrl";
         CbxServerUrl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        CbxServerUrl.TabIndex = 1;
 
         // BtnConnect
         BtnConnect.Name = "BtnConnect";
@@ -62,6 +69,7 @@ public class DlgMultiSvrSwitch : Form
         BtnConnect.AutoSize = true;
         BtnConnect.TextAlign = ContentAlignment.MiddleCenter;
         BtnConnect.Click += BtnConnectClickCallback;
+        BtnConnect.TabIndex = 2;
 
         // TlpMain
         TlpMain.Name = "TlpMain";
@@ -87,9 +95,10 @@ public class DlgMultiSvrSwitch : Form
         Name = "DlgMultiSvrSwitch";
         Text = "多伺服器切換介面";
         Padding = new Padding(10);
-        Size = new Size(420, 180);
+        Size = new Size(420, 150);
         FormBorderStyle = FormBorderStyle.FixedToolWindow;
         StartPosition = FormStartPosition.CenterScreen;
+        AcceptButton = BtnConnect;
         SuspendLayout();
         Controls.Add(TlpMain);
         ResumeLayout(false);
