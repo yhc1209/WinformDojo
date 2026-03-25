@@ -13,6 +13,7 @@ partial class Form1
 
     private TableLayoutPanel TlpMain = new TableLayoutPanel();
     private Button BtnAbout = new Button();
+    private Button BtnMultiSvrSelection = new Button();
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -45,10 +46,12 @@ partial class Form1
         TlpMain.SuspendLayout();
         TlpMain.ColumnCount = 1;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        TlpMain.RowCount = 2;
+        TlpMain.RowCount = 3;
+        TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         TlpMain.Controls.Add(BtnAbout, 0, 0);
+        TlpMain.Controls.Add(BtnMultiSvrSelection, 0, 1);
         TlpMain.ResumeLayout(false);
 
         // BtnAbout
@@ -57,6 +60,13 @@ partial class Form1
         BtnAbout.AutoSize = true;
         BtnAbout.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         BtnAbout.Click += BtnAboutClickCallback;
+
+        // BtnMultiSvrSelection
+        BtnMultiSvrSelection.Name = "BtnMultiSvrSelection";
+        BtnMultiSvrSelection.Text = "Multi-Server Selection";
+        BtnMultiSvrSelection.AutoSize = true;
+        BtnMultiSvrSelection.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnMultiSvrSelection.Click += BtnMultiSvrSelectionCallback;
 
         // main form
         this.components = new Container();
