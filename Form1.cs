@@ -19,4 +19,9 @@ public partial class Form1 : Form
             MessageBoxIcon.Information
         );
     }
+
+    private void BtnMultiSvrSelectionCallback(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }
