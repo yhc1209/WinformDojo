@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace WinformDojo.Dialogs;
 
@@ -40,6 +40,16 @@ public class DlgMultiSvrSwitch : Form
         CbxServerUrl.EndUpdate();
     }
 
+    private void BtnManageSvrInfoClickCallback(object sender, EventArgs e)
+    {
+        using (var dlg = new DlgDictionaryEditor("伺服器URL", "伺服器說明", ServerInfos))
+        {
+            dlg.Text = "伺服器管理";
+            if (dlg.ShowDialog() == DialogResult.OK)
+                ServerInfos = dlg.Dictionary;
+        }
+    }
+
     private string AutoFormat(string rawText)
     {
         UriBuilder builder = new UriBuilder(rawText);
@@ -59,6 +69,7 @@ public class DlgMultiSvrSwitch : Form
     private Label LblServerUrl = new Label();
     private ComboBox CbxServerUrl = new ComboBox();
     private Button BtnConnect = new Button();
+    private Button BtnManageSvrInfo = new Button();
     private ToolTip Tip = new ToolTip();
 
     private void InitializeComponent()
@@ -80,26 +91,40 @@ public class DlgMultiSvrSwitch : Form
         BtnConnect.Name = "BtnConnect";
         BtnConnect.Text = "連線";
         BtnConnect.AutoSize = true;
+        BtnConnect.Anchor = AnchorStyles.Right;
         BtnConnect.TextAlign = ContentAlignment.MiddleCenter;
-        BtnConnect.Click += BtnConnectClickCallback;
         BtnConnect.TabIndex = 2;
+        BtnConnect.Click += BtnConnectClickCallback;
+
+        // BtnManageSvrInfo
+        BtnManageSvrInfo.Name = "BtnManageSvrInfo";
+        // BtnManageSvrInfo.Text = "";
+        // BtnManageSvrInfo.Font = new Font("Segoe MDL2 Assets", 8);
+        BtnManageSvrInfo.Text = "...";
+        BtnManageSvrInfo.AutoSize = true;
+        BtnManageSvrInfo.TextAlign = ContentAlignment.MiddleCenter;
+        BtnManageSvrInfo.Click += BtnManageSvrInfoClickCallback;
 
         // TlpMain
         TlpMain.Name = "TlpMain";
         TlpMain.Dock = DockStyle.Fill;
         TlpMain.Margin = new Padding(10);
-        TlpMain.ColumnCount = 3;
+        TlpMain.ColumnCount = 4;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         TlpMain.RowCount = 3;
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        TlpMain.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
         TlpMain.Controls.Add(LblServerUrl, 0, 0);
         TlpMain.Controls.Add(CbxServerUrl, 1, 0);
+        TlpMain.Controls.Add(BtnManageSvrInfo, 3, 0);
         TlpMain.Controls.Add(BtnConnect, 2, 2);
         TlpMain.SetColumnSpan(CbxServerUrl, 2);
+        TlpMain.SetColumnSpan(BtnConnect, 2);
 
         // tip
         Tip.SetToolTip(BtnConnect, "不會真的連線。");
@@ -108,7 +133,7 @@ public class DlgMultiSvrSwitch : Form
         Name = "DlgMultiSvrSwitch";
         Text = "多伺服器切換介面";
         Padding = new Padding(10);
-        Size = new Size(420, 150);
+        Size = new Size(520, 150);
         FormBorderStyle = FormBorderStyle.FixedToolWindow;
         StartPosition = FormStartPosition.CenterScreen;
         AcceptButton = BtnConnect;
