@@ -6,8 +6,10 @@ namespace WinformDojo;
 
 public partial class Form1 : Form
 {
+    private readonly DojoConfig config;
     public Form1()
     {
+        config = new DojoConfig();
         InitializeComponent();
     }
 
@@ -23,7 +25,10 @@ public partial class Form1 : Form
 
     private void BtnMultiSvrSelectionCallback(object sender, EventArgs e)
     {
-        using (DlgMultiSvrSwitch dlg = new DlgMultiSvrSwitch())
+        using (DlgMultiSvrSwitch dlg = new DlgMultiSvrSwitch(config.ServerNames))
+        {
             dlg.ShowDialog();
+            config.ServerNames = dlg.ServerInfos;
+        }
     }
 }

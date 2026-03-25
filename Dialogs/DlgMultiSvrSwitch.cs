@@ -8,11 +8,12 @@ namespace WinformDojo.Dialogs;
 
 public class DlgMultiSvrSwitch : Form
 {
-    private readonly Dictionary<string, string> dictServers;
-    public DlgMultiSvrSwitch()
+    public Dictionary<string, string> ServerInfos { get; private set; }
+
+    public DlgMultiSvrSwitch(Dictionary<string, string> serverInfos)
     {
         InitializeComponent();
-        dictServers = new Dictionary<string, string>();
+        ServerInfos = serverInfos ?? new Dictionary<string, string>();
     }
 
     private void BtnConnectClickCallback(object sender, EventArgs e)
@@ -29,6 +30,16 @@ public class DlgMultiSvrSwitch : Form
             Debug.WriteLine($"新增{svrurl}至server名單。");
     }
 
+    private void UpdateDropDownItems(object sender, EventArgs e)
+    {
+        Debug.WriteLine($"ServerInfos: 0x{ServerInfos.GetHashCode():X08}");
+        CbxServerUrl.BeginUpdate();
+        CbxServerUrl.Items.Clear();
+        foreach (string url in ServerInfos.Keys)
+            CbxServerUrl.Items.Add(url);
+        CbxServerUrl.EndUpdate();
+    }
+
     private string AutoFormat(string rawText)
     {
         UriBuilder builder = new UriBuilder(rawText);
@@ -37,9 +48,9 @@ public class DlgMultiSvrSwitch : Form
 
     private bool NewServerUrl(string url)
     {
-        if (dictServers.ContainsKey(url))
+        if (ServerInfos.ContainsKey(url))
             return false;
-        dictServers.Add(url, null);
+        ServerInfos.Add(url, null);
         return true;
     }
 
@@ -62,6 +73,8 @@ public class DlgMultiSvrSwitch : Form
         CbxServerUrl.Name = "CbxServerUrl";
         CbxServerUrl.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         CbxServerUrl.TabIndex = 1;
+        CbxServerUrl.DropDownStyle = ComboBoxStyle.DropDown;
+        CbxServerUrl.DropDown += UpdateDropDownItems;
 
         // BtnConnect
         BtnConnect.Name = "BtnConnect";
