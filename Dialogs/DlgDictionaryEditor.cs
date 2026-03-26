@@ -67,6 +67,18 @@ public class DlgDictionaryEditor : Form
         TbxEditor.Visible = false;
     }
 
+    private void EditorKeyDownCallback(object sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.Enter:
+                LsvDictionary.Focus();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void UpdateListView()
     {
         LsvDictionary.BeginUpdate();
@@ -100,6 +112,7 @@ public class DlgDictionaryEditor : Form
         TbxEditor.Visible = false;
         TbxEditor.Multiline = false;
         TbxEditor.Leave += AssignValue;
+        TbxEditor.KeyDown += EditorKeyDownCallback;
 
         // LsvDictionary
         LsvDictionary.Name = "LsvDictionary";
