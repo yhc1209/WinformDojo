@@ -41,7 +41,7 @@ public class DlgDictionaryEditor : Form
         }
 
         Debug.WriteLine($"編輯{item.Text}的說明。");
-        TbxEditor.Location = item.SubItems[1].Bounds.Location;
+        TbxEditor.Bounds = item.SubItems[1].Bounds;
         TbxEditor.Text = item.SubItems[1].Text ?? string.Empty;
         TbxEditor.Visible = true;
         TbxEditor.Focus();
