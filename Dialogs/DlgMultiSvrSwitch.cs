@@ -118,7 +118,7 @@ public class DlgMultiSvrSwitch : Form
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        TlpMain.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+        // TlpMain.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
         TlpMain.Controls.Add(LblServerUrl, 0, 0);
         TlpMain.Controls.Add(CbxServerUrl, 1, 0);
         TlpMain.Controls.Add(BtnManageSvrInfo, 3, 0);

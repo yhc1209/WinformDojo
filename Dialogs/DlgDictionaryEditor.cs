@@ -41,7 +41,7 @@ public class DlgDictionaryEditor : Form
         }
 
         Debug.WriteLine($"編輯{item.Text}的說明。");
-        TbxEditor.Location = item.SubItems[1].Bounds.Location;
+        TbxEditor.Bounds = item.SubItems[1].Bounds;
         TbxEditor.Text = item.SubItems[1].Text ?? string.Empty;
         TbxEditor.Visible = true;
         TbxEditor.Focus();
@@ -65,6 +65,18 @@ public class DlgDictionaryEditor : Form
     {
         LsvDictionary.SelectedItems[0].SubItems[1].Text = TbxEditor.Text;
         TbxEditor.Visible = false;
+    }
+
+    private void EditorKeyDownCallback(object sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.Enter:
+                LsvDictionary.Focus();
+                break;
+            default:
+                break;
+        }
     }
 
     private void UpdateListView()
@@ -100,6 +112,7 @@ public class DlgDictionaryEditor : Form
         TbxEditor.Visible = false;
         TbxEditor.Multiline = false;
         TbxEditor.Leave += AssignValue;
+        TbxEditor.KeyDown += EditorKeyDownCallback;
 
         // LsvDictionary
         LsvDictionary.Name = "LsvDictionary";
