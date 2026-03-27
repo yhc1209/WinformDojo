@@ -31,4 +31,10 @@ public partial class Form1 : Form
             config.ServerNames = dlg.ServerInfos;
         }
     }
+
+    private void BtnGifSplitterCallback(object sender, EventArgs e)
+    {
+        using (DlgGifSplitter dlg = new DlgGifSplitter())
+            dlg.ShowDialog();
+    }
 }
