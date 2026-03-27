@@ -8,4 +8,12 @@
     <!-- <ImplicitUsings>enable</ImplicitUsings> -->
   </PropertyGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="imgs\switch_on.ico" />
+    <EmbeddedResource Include="imgs\switch_off.ico" />
+    <EmbeddedResource Include="imgs\cycle_0.ico" />
+    <EmbeddedResource Include="imgs\cycle_1.ico" />
+    <EmbeddedResource Include="imgs\cycle_2.ico" />
+    <EmbeddedResource Include="imgs\cycle_3.ico" />
+  </ItemGroup>
 </Project>
