@@ -14,6 +14,7 @@ partial class Form1
     private TableLayoutPanel TlpMain = new TableLayoutPanel();
     private Button BtnAbout = new Button();
     private Button BtnMultiSvrSelection = new Button();
+    private Button BtnGifSplitter = new Button();
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -46,12 +47,14 @@ partial class Form1
         TlpMain.SuspendLayout();
         TlpMain.ColumnCount = 1;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        TlpMain.RowCount = 3;
+        TlpMain.RowCount = 4;
+        TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         TlpMain.Controls.Add(BtnAbout, 0, 0);
         TlpMain.Controls.Add(BtnMultiSvrSelection, 0, 1);
+        TlpMain.Controls.Add(BtnGifSplitter, 0, 2);
         TlpMain.ResumeLayout(false);
 
         // BtnAbout
@@ -67,6 +70,13 @@ partial class Form1
         BtnMultiSvrSelection.AutoSize = true;
         BtnMultiSvrSelection.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         BtnMultiSvrSelection.Click += BtnMultiSvrSelectionCallback;
+
+        // BtnGifSplitter
+        BtnGifSplitter.Name = "BtnGifSplitter";
+        BtnGifSplitter.Text = "GIF Splitter";
+        BtnGifSplitter.AutoSize = true;
+        BtnGifSplitter.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnGifSplitter.Click += BtnGifSplitterCallback;
 
         // main form
         this.components = new Container();
