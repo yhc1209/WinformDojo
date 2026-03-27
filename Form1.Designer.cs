@@ -15,6 +15,7 @@ partial class Form1
     private Button BtnAbout = new Button();
     private Button BtnMultiSvrSelection = new Button();
     private Button BtnGifSplitter = new Button();
+    private Button BtnTrayicon = new Button();
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -47,7 +48,8 @@ partial class Form1
         TlpMain.SuspendLayout();
         TlpMain.ColumnCount = 1;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        TlpMain.RowCount = 4;
+        TlpMain.RowCount = 5;
+        TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -55,6 +57,7 @@ partial class Form1
         TlpMain.Controls.Add(BtnAbout, 0, 0);
         TlpMain.Controls.Add(BtnMultiSvrSelection, 0, 1);
         TlpMain.Controls.Add(BtnGifSplitter, 0, 2);
+        TlpMain.Controls.Add(BtnTrayicon, 0, 3);
         TlpMain.ResumeLayout(false);
 
         // BtnAbout
@@ -77,6 +80,13 @@ partial class Form1
         BtnGifSplitter.AutoSize = true;
         BtnGifSplitter.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         BtnGifSplitter.Click += BtnGifSplitterCallback;
+
+        // BtnTrayicon
+        BtnTrayicon.Name = "BtnTrayicon";
+        BtnTrayicon.Text = "Trayicon";
+        BtnTrayicon.AutoSize = true;
+        BtnTrayicon.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnTrayicon.Click += BtnTrayiconCallback;
 
         // main form
         this.components = new Container();

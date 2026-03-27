@@ -37,4 +37,10 @@ public partial class Form1 : Form
         using (DlgGifSplitter dlg = new DlgGifSplitter())
             dlg.ShowDialog();
     }
+
+    private void BtnTrayiconCallback(object sender, EventArgs e)
+    {
+        using (DlgTrayicon dlg = new DlgTrayicon())
+            dlg.ShowDialog();
+    }
 }
