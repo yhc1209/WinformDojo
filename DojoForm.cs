@@ -4,10 +4,10 @@ using WinformDojo.Dialogs;
 
 namespace WinformDojo;
 
-public partial class Form1 : Form
+public partial class DojoForm : Form
 {
     private readonly DojoConfig config;
-    public Form1()
+    public DojoForm()
     {
         config = new DojoConfig();
         InitializeComponent();

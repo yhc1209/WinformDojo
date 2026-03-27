@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace WinformDojo;
 
-partial class Form1
+partial class DojoForm
 {
     /// <summary>
     ///  Required designer variable.
