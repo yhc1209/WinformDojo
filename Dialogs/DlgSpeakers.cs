@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -43,8 +44,34 @@ public class DlgSpeakers : Form
         if (!File.Exists(pluginPath))
             throw new IOException("The specified plugin path does not exist.");
 
-        loadContext = new SpeakerLoadContext(pluginPath);
-        // Assembly assembly = loadContext.LoadFromAssemblyPath(pluginPath);
+        int count = 0;
+        Assembly assembly = Assembly.LoadFrom(pluginPath);
+        foreach (Type type in assembly.GetTypes())
+        {
+            if (type.IsClass && !type.IsAbstract && typeof(ISpeaker).IsAssignableFrom(type))
+            {
+                bool fExist = false;
+                foreach (var item in CbxSpeaker.Items)
+                {
+                    if (type.ToString() == item.ToString())
+                    {
+                        fExist = true;
+                        Debug.WriteLine($"'{type}'已經存在，略過。");
+                        break;
+                    }
+                }
+                if (fExist)
+                    continue;
+                    
+                if (Activator.CreateInstance(type) is ISpeaker speaker)
+                {
+                    CbxSpeaker.Items.Add(speaker);
+                    count++;
+                }
+            }
+        }
+
+        MessageBox.Show($"成功加入{count}個會發出聲音的東東。", "載入plug-in");
     }
 
     private void Output(string message)
