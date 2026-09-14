@@ -19,6 +19,11 @@ public class Dog : ISpeaker
         int idx = RandomNumberGenerator.GetInt32(SPEECHES.Length);
         return SPEECHES[idx];
     }
+
+    public override string ToString()
+    {
+        return "Dog";
+    }
 }
 
 public class Cat : ISpeaker
@@ -28,10 +33,15 @@ public class Cat : ISpeaker
     private static readonly string[] SPEECHES = {
         "Meow~", "Meow.", "Meeeoow...", "Meow, meow..."
     };
-    
+
     public string Speak()
     {
         int idx = RandomNumberGenerator.GetInt32(SPEECHES.Length);
         return SPEECHES[idx];
+    }
+
+    public override string ToString()
+    {
+        return "Cat";
     }
 }

@@ -9,10 +9,7 @@ namespace WinformDojo.Dialogs;
 
 public class DlgSpeakers : Form
 {
-    private static string[] speakers = [];
-    private ISpeaker speaker = null;
     private SpeakerLoadContext loadContext = null;
-    
 
     public DlgSpeakers()
     {
@@ -20,7 +17,10 @@ public class DlgSpeakers : Form
     }
 
     private void FormLodingCallback(object sender, EventArgs e)
-    {}
+    {
+        CbxSpeaker.Items.Add(new Dog());
+        CbxSpeaker.Items.Add(new Cat());
+    }
 
     private void FormClosedCallback(object sender, FormClosedEventArgs e)
     {
@@ -29,6 +29,7 @@ public class DlgSpeakers : Form
 
     private void BtnSpeakCallback(object sender, EventArgs e)
     {
+        ISpeaker speaker = CbxSpeaker.SelectedItem as ISpeaker;
         if (speaker is null)
             Output("Please select a speaker first.");
         else
