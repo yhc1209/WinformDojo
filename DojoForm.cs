@@ -43,4 +43,9 @@ public partial class DojoForm : Form
         using (DlgTrayicon dlg = new DlgTrayicon())
             dlg.ShowDialog();
     }
+
+    private void BtnPluginCallback(object sender, EventArgs e)
+    {
+        throw new NotImplementedException("還沒做好這個...");
+    }
 }
