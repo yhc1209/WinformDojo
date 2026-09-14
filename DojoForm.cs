@@ -46,6 +46,7 @@ public partial class DojoForm : Form
 
     private void BtnPluginCallback(object sender, EventArgs e)
     {
-        throw new NotImplementedException("還沒做好這個...");
+        using (DlgSpeakers dlg = new DlgSpeakers())
+            dlg.ShowDialog();
     }
 }
