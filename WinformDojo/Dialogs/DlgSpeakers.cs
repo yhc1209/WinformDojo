@@ -37,14 +37,26 @@ public class DlgSpeakers : Form
 
     private void BtnImportCallback(object sender, EventArgs e)
     {
-        using (OpenFileDialog ofd = new OpenFileDialog())
+        string msgTitle = "Import Plugin";
+        try
         {
-            ofd.Multiselect = false;
-            ofd.CheckPathExists = true;
-            ofd.Filter = "dll files|*.dll|All files|*.*";
-            if (ofd.ShowDialog() != DialogResult.OK)
-                return;
-            LoadDll(ofd.FileName);
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Title = msgTitle;
+                ofd.Multiselect = false;
+                ofd.CheckPathExists = true;
+                ofd.Filter = "dll files|*.dll|All files|*.*";
+                if (ofd.ShowDialog() != DialogResult.OK)
+                    return;
+                LoadDll(ofd.FileName);
+            }
+        }
+        catch (Exception excp)
+        {
+            MessageBox.Show(string.Format(
+                "載入plugin時出例外：{0} - {1}\n{2}",
+                excp.GetType(), excp.Message, excp.StackTrace
+            ), msgTitle);
         }
     }
 
