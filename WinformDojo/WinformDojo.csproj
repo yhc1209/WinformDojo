@@ -16,4 +16,9 @@
     <EmbeddedResource Include="imgs\cycle_2.ico" />
     <EmbeddedResource Include="imgs\cycle_3.ico" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="PlugIns\**" />
+    <Content Remove="PlugIns\**" />
+  </ItemGroup>
 </Project>
