@@ -1,11 +1,14 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Drawing;
 using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 using SharedContract.Speaker;
+using WinformDojo.Plugin;
 
 namespace WinformDojo.Dialogs;
 
@@ -23,8 +26,7 @@ public class DlgSpeakers : Form
     }
 
     private void FormClosedCallback(object sender, FormClosedEventArgs e)
-    {
-    }
+    { }
 
     private void BtnSpeakCallback(object sender, EventArgs e)
     {
@@ -67,43 +69,26 @@ public class DlgSpeakers : Form
         if (!File.Exists(pluginPath))
             throw new IOException("The specified plugin path does not exist.");
 
-        int count = 0;
-        Type speakType = typeof(ISpeaker);
-        Debug.WriteLine($"[import] 要找繼承{speakType}的class。");
+        // 1. 初始化隔離的載入上下文
+        var loadContext = new SpeakerLoadContext(pluginPath);
+        Assembly pluginAssembly = loadContext.LoadFromAssemblyPath(pluginPath);
 
-        Assembly assembly = Assembly.LoadFrom(pluginPath);
-        foreach (Type type in assembly.GetTypes())
-        {
-            if (!type.IsClass || type.IsAbstract)
-                continue;
-            if (!speakType.IsAssignableFrom(type))
-                continue;
+        // 2. 透過反射尋找實作 IPlugin 的類別
+        Type[] types = pluginAssembly.GetTypes();
+        Type pluginType = types.FirstOrDefault(t => typeof(ISpeakerPlugin).IsAssignableFrom(t) && !t.IsInterface);
+        if (pluginType is null)
+            throw new Exception("The plugin resource was not found.");
 
-            string typeName = type.FullName;
-            Debug.WriteLine($"偵測到ISpeaker：{typeName}");
-            bool fExist = false;
-            foreach (var item in CbxSpeaker.Items)
-            {
-                string itemTypeName = item.GetType().FullName;
-                Debug.WriteLine($"[現存] {itemTypeName}");
-                if (typeName == itemTypeName)
-                {
-                    fExist = true;
-                    Debug.WriteLine($"'{typeName}'已經存在，略過。");
-                    break;
-                }
-            }
-            if (fExist)
-                continue;
+        // 3. 實例化外掛主體
+        ISpeakerPlugin plugin = (ISpeakerPlugin)Activator.CreateInstance(pluginType);
+        Debug.WriteLine($"成功載入外掛：{plugin.PluginName}");
 
-            if (Activator.CreateInstance(type) is ISpeaker speaker)
-            {
-                CbxSpeaker.Items.Add(speaker);
-                count++;
-            }
-        }
+        // 4. 取得並操作外掛的擴充物件
+        IReadOnlyList<ISpeaker> extendedObjects = plugin.GetExtendedObjects();
+        CbxSpeaker.Items.AddRange(extendedObjects.ToArray());
 
-        MessageBox.Show($"成功加入{count}個會發出聲音的東東。", "載入plug-in");
+        // 5. 卸載外掛與記憶體回收 (當 isCollectible = true 時)
+        loadContext.Unload();
     }
 
     private void Output(string message)

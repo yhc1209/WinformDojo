@@ -12,6 +12,6 @@ public interface ISpeaker
 
 public interface ISpeakerPlugin
 {
-    public string Name { get; }
+    public string PluginName { get; }
     public IReadOnlyList<ISpeaker> GetExtendedObjects();
 }

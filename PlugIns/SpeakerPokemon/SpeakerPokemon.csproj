@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedContract\SharedContract.csproj" />
+    <ProjectReference Include="..\..\SharedContract\SharedContract.csproj">
+      <Private>false</Private>
+    </ProjectReference>
   </ItemGroup>
 </Project>
