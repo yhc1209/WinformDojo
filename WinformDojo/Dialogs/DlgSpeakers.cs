@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Windows.Forms;
 
+using SharedContract.Speaker;
+
 namespace WinformDojo.Dialogs;
 
 public class DlgSpeakers : Form
@@ -73,7 +75,6 @@ public class DlgSpeakers : Form
             if (!interfaceStrs.Contains(strISpeaker))
                 continue;
 
-            type.IsAssignableFrom()
             string typeName = type.ToString();
             Debug.WriteLine($"偵測到ISpeaker：{typeName}");
             bool fExist = false;
@@ -103,7 +104,7 @@ public class DlgSpeakers : Form
     {
         TbxOutput.AppendText($"{message}{Environment.NewLine}");
     }
-    
+
     #region GUI components
     private TableLayoutPanel TlpMain = new TableLayoutPanel();
     private ComboBox CbxSpeaker = new ComboBox();

@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace WinformDojo;
+namespace SharedContract.Speaker;
 
 public class SpeakerLoadContext : AssemblyLoadContext
 {

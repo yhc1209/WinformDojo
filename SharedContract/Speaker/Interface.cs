@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WinformDojo;
+namespace SharedContract.Speaker;
 
 /// <summary>帶有<c>Speak</c>方法的物件介面。</summary>
 /// <remarks>用來練習plugin使用的。</remarks>
