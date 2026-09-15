@@ -16,6 +16,7 @@ partial class DojoForm
     private Button BtnMultiSvrSelection = new Button();
     private Button BtnGifSplitter = new Button();
     private Button BtnTrayicon = new Button();
+    private Button BtnPlugin = new Button();
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -48,7 +49,8 @@ partial class DojoForm
         TlpMain.SuspendLayout();
         TlpMain.ColumnCount = 1;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        TlpMain.RowCount = 5;
+        TlpMain.RowCount = 6;
+        TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -58,6 +60,7 @@ partial class DojoForm
         TlpMain.Controls.Add(BtnMultiSvrSelection, 0, 1);
         TlpMain.Controls.Add(BtnGifSplitter, 0, 2);
         TlpMain.Controls.Add(BtnTrayicon, 0, 3);
+        TlpMain.Controls.Add(BtnPlugin, 0, 4);
         TlpMain.ResumeLayout(false);
 
         // BtnAbout
@@ -87,6 +90,13 @@ partial class DojoForm
         BtnTrayicon.AutoSize = true;
         BtnTrayicon.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         BtnTrayicon.Click += BtnTrayiconCallback;
+
+        // BtnPlugin
+        BtnPlugin.Name = "BtnPlugin";
+        BtnPlugin.Text = "Plugin Practice";
+        BtnPlugin.AutoSize = true;
+        BtnPlugin.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnPlugin.Click += BtnPluginCallback;
 
         // main form
         this.components = new Container();

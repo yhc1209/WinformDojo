@@ -43,4 +43,10 @@ public partial class DojoForm : Form
         using (DlgTrayicon dlg = new DlgTrayicon())
             dlg.ShowDialog();
     }
+
+    private void BtnPluginCallback(object sender, EventArgs e)
+    {
+        using (DlgSpeakers dlg = new DlgSpeakers())
+            dlg.ShowDialog();
+    }
 }
