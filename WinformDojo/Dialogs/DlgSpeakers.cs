@@ -1,10 +1,8 @@
 using System;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
+using System.Drawing;
 using System.Reflection;
-using System.Runtime.Loader;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using SharedContract.Speaker;
@@ -13,8 +11,6 @@ namespace WinformDojo.Dialogs;
 
 public class DlgSpeakers : Form
 {
-    private SpeakerLoadContext loadContext = null;
-
     public DlgSpeakers()
     {
         InitializeComponent();
@@ -28,7 +24,6 @@ public class DlgSpeakers : Form
 
     private void FormClosedCallback(object sender, FormClosedEventArgs e)
     {
-        loadContext?.Unload();
     }
 
     private void BtnSpeakCallback(object sender, EventArgs e)
@@ -61,26 +56,25 @@ public class DlgSpeakers : Form
             throw new IOException("The specified plugin path does not exist.");
 
         int count = 0;
-        string strISpeaker = typeof(ISpeaker).ToString();
-        Debug.WriteLine($"[import] 要找繼承{strISpeaker}的class。");
+        Type speakType = typeof(ISpeaker);
+        Debug.WriteLine($"[import] 要找繼承{speakType}的class。");
 
         Assembly assembly = Assembly.LoadFrom(pluginPath);
         foreach (Type type in assembly.GetTypes())
         {
             if (!type.IsClass || type.IsAbstract)
                 continue;
-
-            string[] interfaceStrs = type.GetInterfaces().Select(i => i.ToString()).ToArray();
-            Debug.WriteLine($"發現class：{type} (interfaces: {string.Join(", ", interfaceStrs)})");
-            if (!interfaceStrs.Contains(strISpeaker))
+            if (!speakType.IsAssignableFrom(type))
                 continue;
 
-            string typeName = type.ToString();
+            string typeName = type.FullName;
             Debug.WriteLine($"偵測到ISpeaker：{typeName}");
             bool fExist = false;
             foreach (var item in CbxSpeaker.Items)
             {
-                if (typeName == item.ToString())
+                string itemTypeName = item.GetType().FullName;
+                Debug.WriteLine($"[現存] {itemTypeName}");
+                if (typeName == itemTypeName)
                 {
                     fExist = true;
                     Debug.WriteLine($"'{typeName}'已經存在，略過。");
