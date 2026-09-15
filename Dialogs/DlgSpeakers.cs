@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Windows.Forms;
@@ -37,6 +38,19 @@ public class DlgSpeakers : Form
             Output(speaker.Speak());
     }
 
+    private void BtnImportCallback(object sender, EventArgs e)
+    {
+        using (OpenFileDialog ofd = new OpenFileDialog())
+        {
+            ofd.Multiselect = false;
+            ofd.CheckPathExists = true;
+            ofd.Filter = "dll files|*.dll|All files|*.*";
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+            LoadDll(ofd.FileName);
+        }
+    }
+
     private void LoadDll(string pluginPath)
     {
         if (pluginPath is null)
@@ -45,29 +59,40 @@ public class DlgSpeakers : Form
             throw new IOException("The specified plugin path does not exist.");
 
         int count = 0;
+        string strISpeaker = typeof(ISpeaker).ToString();
+        Debug.WriteLine($"[import] 要找繼承{strISpeaker}的class。");
+
         Assembly assembly = Assembly.LoadFrom(pluginPath);
         foreach (Type type in assembly.GetTypes())
         {
-            if (type.IsClass && !type.IsAbstract && typeof(ISpeaker).IsAssignableFrom(type))
+            if (!type.IsClass || type.IsAbstract)
+                continue;
+
+            string[] interfaceStrs = type.GetInterfaces().Select(i => i.ToString()).ToArray();
+            Debug.WriteLine($"發現class：{type} (interfaces: {string.Join(", ", interfaceStrs)})");
+            if (!interfaceStrs.Contains(strISpeaker))
+                continue;
+
+            type.IsAssignableFrom()
+            string typeName = type.ToString();
+            Debug.WriteLine($"偵測到ISpeaker：{typeName}");
+            bool fExist = false;
+            foreach (var item in CbxSpeaker.Items)
             {
-                bool fExist = false;
-                foreach (var item in CbxSpeaker.Items)
+                if (typeName == item.ToString())
                 {
-                    if (type.ToString() == item.ToString())
-                    {
-                        fExist = true;
-                        Debug.WriteLine($"'{type}'已經存在，略過。");
-                        break;
-                    }
+                    fExist = true;
+                    Debug.WriteLine($"'{typeName}'已經存在，略過。");
+                    break;
                 }
-                if (fExist)
-                    continue;
-                    
-                if (Activator.CreateInstance(type) is ISpeaker speaker)
-                {
-                    CbxSpeaker.Items.Add(speaker);
-                    count++;
-                }
+            }
+            if (fExist)
+                continue;
+
+            if (Activator.CreateInstance(type) is ISpeaker speaker)
+            {
+                CbxSpeaker.Items.Add(speaker);
+                count++;
             }
         }
 
@@ -83,6 +108,7 @@ public class DlgSpeakers : Form
     private TableLayoutPanel TlpMain = new TableLayoutPanel();
     private ComboBox CbxSpeaker = new ComboBox();
     private Button BtnSpeak = new Button();
+    private Button BtnImport = new Button();
     private TextBox TbxOutput = new TextBox();
 
     private void InitializeComponent()
@@ -100,6 +126,14 @@ public class DlgSpeakers : Form
         BtnSpeak.TabIndex = 1;
         BtnSpeak.Click += BtnSpeakCallback;
 
+        // BtnImport
+        BtnImport.Name = "BtnBtnImportSpeak";
+        BtnImport.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnImport.Text = "import";
+        BtnImport.AutoSize = true;
+        BtnImport.TabIndex = 2;
+        BtnImport.Click += BtnImportCallback;
+
         // TbxOutput
         TbxOutput.Name = "TbxOutput";
         TbxOutput.Text = string.Empty;
@@ -112,16 +146,18 @@ public class DlgSpeakers : Form
         TlpMain.Name = "TlpMain";
         TlpMain.Dock = DockStyle.Fill;
         TlpMain.SuspendLayout();
-        TlpMain.ColumnCount = 2;
+        TlpMain.ColumnCount = 3;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         TlpMain.RowCount = 2;
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         TlpMain.Controls.Add(CbxSpeaker, 0, 0);
         TlpMain.Controls.Add(BtnSpeak, 1, 0);
+        TlpMain.Controls.Add(BtnImport, 2, 0);
         TlpMain.Controls.Add(TbxOutput, 0, 1);
-        TlpMain.SetColumnSpan(TbxOutput, 2);
+        TlpMain.SetColumnSpan(TbxOutput, TlpMain.ColumnCount);
         TlpMain.ResumeLayout(false);
 
         // DlgSpeakers
