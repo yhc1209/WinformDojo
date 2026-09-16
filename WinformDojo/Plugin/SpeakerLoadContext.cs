@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using SharedContract.Speaker;
 
-namespace WinformDojo.Plugin;
+namespace WinformDojo.Model;
 
 public class SpeakerLoadContext : AssemblyLoadContext
 {

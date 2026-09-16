@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 
 using SharedContract.Speaker;
-using WinformDojo.Plugin;
+using WinformDojo.Model;
 
 namespace WinformDojo.Dialogs;
 
