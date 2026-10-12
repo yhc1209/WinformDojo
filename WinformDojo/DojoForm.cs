@@ -68,5 +68,10 @@ public partial class DojoForm : Form
         Debug.WriteLine($"[dbg] choosed '{assemblyPath}'.");
 
         // TODO: 檢驗
+        bool result = Utils.AssemblyVerifier.VerifyAssemblySignature(assemblyPath);
+        MessageBox.Show(
+            $"{assemblyPath} verification result: {result}",
+            "Verification Result"
+        );
     }
 }
