@@ -17,6 +17,7 @@ partial class DojoForm
     private Button BtnGifSplitter = new Button();
     private Button BtnTrayicon = new Button();
     private Button BtnPlugin = new Button();
+    private Button BtnAssemblyVerifier = new Button();
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -49,7 +50,8 @@ partial class DojoForm
         TlpMain.SuspendLayout();
         TlpMain.ColumnCount = 1;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        TlpMain.RowCount = 6;
+        TlpMain.RowCount = 7;
+        TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -61,6 +63,7 @@ partial class DojoForm
         TlpMain.Controls.Add(BtnGifSplitter, 0, 2);
         TlpMain.Controls.Add(BtnTrayicon, 0, 3);
         TlpMain.Controls.Add(BtnPlugin, 0, 4);
+        TlpMain.Controls.Add(BtnAssemblyVerifier, 0, 5);
         TlpMain.ResumeLayout(false);
 
         // BtnAbout
@@ -97,6 +100,13 @@ partial class DojoForm
         BtnPlugin.AutoSize = true;
         BtnPlugin.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         BtnPlugin.Click += BtnPluginCallback;
+
+        // BtnAssemblyVerifier
+        BtnAssemblyVerifier.Name = "BtnAssemblyVerifier";
+        BtnAssemblyVerifier.Text = "Assembly Verification";
+        BtnAssemblyVerifier.AutoSize = true;
+        BtnAssemblyVerifier.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnAssemblyVerifier.Click += BtnAssemblyVerifierCallback;
 
         // main form
         this.components = new Container();
