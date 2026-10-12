@@ -68,7 +68,11 @@ public partial class DojoForm : Form
         Debug.WriteLine($"[dbg] choosed '{assemblyPath}'.");
 
         // TODO: 檢驗
-        bool result = Utils.TrustedPublisherVerifier.VerifyPluginByPublisher(assemblyPath);
+        // bool result = Utils.TrustedPublisherVerifier.VerifyPluginByPublisher(assemblyPath);
+        string thumbprint = "A1B2C3D4E5F67890123456789ABCDEF012345678";
+        // bool result = Utils.DigiSignVerifier.VerifyAsync(assemblyPath, thumbprint, default).Result;
+        bool result = Utils.DigiSignVerifier.VerifyMySelfSignedDll(assemblyPath, thumbprint);
+
         MessageBox.Show(
             $"{assemblyPath} verification result: {result}",
             "Verification Result"
