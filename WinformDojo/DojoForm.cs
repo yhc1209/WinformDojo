@@ -68,7 +68,7 @@ public partial class DojoForm : Form
         Debug.WriteLine($"[dbg] choosed '{assemblyPath}'.");
 
         // TODO: 檢驗
-        bool result = Utils.AssemblyVerifier.VerifyAssemblySignature(assemblyPath);
+        bool result = Utils.TrustedPublisherVerifier.VerifyPluginByPublisher(assemblyPath);
         MessageBox.Show(
             $"{assemblyPath} verification result: {result}",
             "Verification Result"
