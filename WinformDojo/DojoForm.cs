@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using WinformDojo.Dialogs;
 
@@ -48,5 +49,33 @@ public partial class DojoForm : Form
     {
         using (DlgSpeakers dlg = new DlgSpeakers())
             dlg.ShowDialog();
+    }
+
+    private void BtnAssemblyVerifierCallback(object sender, EventArgs e)
+    {
+        string assemblyPath = null;
+        using (OpenFileDialog ofd = new OpenFileDialog())
+        {
+            ofd.Title = "Select a assembly file to verify...";
+            ofd.Filter = "dynamic link library|*.dll|executable file|*.exe|ALL|*.*";
+            ofd.CheckFileExists = true;
+            ofd.CheckPathExists = true;
+            ofd.Multiselect = false;
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+            assemblyPath = ofd.FileName;
+        }
+        Debug.WriteLine($"[dbg] choosed '{assemblyPath}'.");
+
+        // TODO: 檢驗
+        // bool result = Utils.TrustedPublisherVerifier.VerifyPluginByPublisher(assemblyPath);
+        string thumbprint = "A1B2C3D4E5F67890123456789ABCDEF012345678";
+        // bool result = Utils.DigiSignVerifier.VerifyAsync(assemblyPath, thumbprint, default).Result;
+        bool result = Utils.DigiSignVerifier.VerifyMySelfSignedDll(assemblyPath, thumbprint);
+
+        MessageBox.Show(
+            $"{assemblyPath} verification result: {result}",
+            "Verification Result"
+        );
     }
 }
