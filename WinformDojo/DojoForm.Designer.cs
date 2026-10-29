@@ -18,6 +18,7 @@ partial class DojoForm
     private Button BtnTrayicon = new Button();
     private Button BtnPlugin = new Button();
     private Button BtnAssemblyVerifier = new Button();
+    private Button BtnDatetimeConvert = new Button();
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -50,7 +51,8 @@ partial class DojoForm
         TlpMain.SuspendLayout();
         TlpMain.ColumnCount = 1;
         TlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        TlpMain.RowCount = 7;
+        TlpMain.RowCount = 8;
+        TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         TlpMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -64,6 +66,7 @@ partial class DojoForm
         TlpMain.Controls.Add(BtnTrayicon, 0, 3);
         TlpMain.Controls.Add(BtnPlugin, 0, 4);
         TlpMain.Controls.Add(BtnAssemblyVerifier, 0, 5);
+        TlpMain.Controls.Add(BtnDatetimeConvert, 0, 6);
         TlpMain.ResumeLayout(false);
 
         // BtnAbout
@@ -107,6 +110,13 @@ partial class DojoForm
         BtnAssemblyVerifier.AutoSize = true;
         BtnAssemblyVerifier.Anchor = AnchorStyles.Left | AnchorStyles.Right;
         BtnAssemblyVerifier.Click += BtnAssemblyVerifierCallback;
+
+        // BtnDatetimeConvert
+        BtnDatetimeConvert.Name = "BtnDatetimeConvert";
+        BtnDatetimeConvert.Text = "Datetime Convert";
+        BtnDatetimeConvert.AutoSize = true;
+        BtnDatetimeConvert.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        BtnDatetimeConvert.Click += BtnDatetimeConvertCallback;
 
         // main form
         this.components = new Container();

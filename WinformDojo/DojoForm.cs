@@ -78,4 +78,10 @@ public partial class DojoForm : Form
             "Verification Result"
         );
     }
+
+    private void BtnDatetimeConvertCallback(object sender, EventArgs e)
+    {
+        using (DlgDateTimeConvert dlg = new DlgDateTimeConvert())
+            dlg.ShowDialog();
+    }
 }
